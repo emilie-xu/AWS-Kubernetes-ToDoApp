@@ -1,0 +1,24 @@
+export PATH= #path to flask app
+cd $PATH
+
+#container for flask app
+	#https://docs.docker.com/get-started/02_our_app/
+
+	#build dockerimage
+	docker build -t getting-started .
+	
+	#run dockerimage
+	docker run -dp 3000:3000 getting-started
+
+#container for mongodb persistence: APPLE ONLY :(
+	#https://www.mongodb.com/compatibility/docker
+
+export MONGODB_VERSION=6.0-ubi8
+docker run --name mongodb -d mongodb/mongodb-community-server:$MONGODB_VERSION
+docker run --name mongodb -d -p 27017:27017 mongodb/mongodb-community-server:$MONGODB_VERSION
+
+#dockerfile in directory -- replace with path and other info
+
+#build docker image with dockercli
+	#https://docs.docker.com/get-started/03_updating_app/
+docker ps
