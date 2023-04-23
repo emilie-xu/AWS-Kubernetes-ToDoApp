@@ -1,0 +1,13 @@
+#PART 3: MINIKUBE!
+
+#Create pods:
+minikube start
+kubectl run flaskapp --image=flask-app:latest --port=5000
+kubectl run mongodb --image=db:latest --port=27017
+
+
+
+minikube names
+
+flask-app; 5000
+db; 27017

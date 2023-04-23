@@ -1,0 +1,7 @@
+#PART 3: MINIKUBE!
+
+#Create pods:
+minikube start
+kubectl run myflaskapp --image=flaskapp:latest --port=300
+kubectl run mongodbstore --image=mdb:latest --port=300
+
