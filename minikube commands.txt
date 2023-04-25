@@ -5,9 +5,25 @@ minikube start
 kubectl run flaskapp --image=flask-app:latest --port=5000
 kubectl run mongodb --image=db:latest --port=27017
 
+#PART 8: HEALTH MONITORING VIA PROMETHEUS
 
+kubectl create namespace monitoring
+kubectl create -f part8/clusterRole.yml
+kubectl create -f part8/config-map.yml
+kubectl create -f part8/prometheus-deployment.yml
+kubectl get deployments --namespace=monitoring
+kubectl get pods --namespace=monitoring
+kubectl port-forward <pod-name> 8080:9090 -n monitoring
+#access http://localhost:8080 to for prometheus homepage
 
-minikube names
+#get kube state metrics
+git clone https://github.com/devopscube/kube-state-metrics-configs.git
+kubectl apply -f kube-state-metrics-configs/
+kubectl get deployments kube-state-metrics -n kube-system
 
-flask-app; 5000
-db; 27017
+#alertmanager
+git clone https://github.com/bibinwilson/kubernetes-alert-manager.git
+kubectl create -f part8/AlertManagerConfigmap.yml
+kubectl create -f part8/AlertTemplateConfigMap.yml
+kubectl create -f part8/Deployment.yml
+kubectl create -f part8/Service.yml

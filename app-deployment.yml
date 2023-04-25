@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app
 spec:
-  #replicas: 1
+  replicas: 1
   selector:
     matchLabels:
       app: flask-app
@@ -17,6 +17,11 @@ spec:
         image: sarahtang7/flask-app:latest #todo:latest
         ports:
         - containerPort: 5000
+        env:
+        - name: MONGO_HOST
+          value: mongodb-service
+        - name: MONGO_PORT
+          value: "27017"
         resources:
           limits:
             cpu: "0.5"
@@ -24,6 +29,23 @@ spec:
           requests:
             cpu: "500m"
             memory: "256Mi"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          # timeoutSeconds: 1
+          # failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          # timeoutSeconds: 1
+          # failureThreshold: 3
+
       #   env:
       #   - name: FLASK_APP
       #     value: "app.py"
